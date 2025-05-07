@@ -535,14 +535,22 @@ class Masterdata extends CI_Controller {
 
 	public function product()
 	{
-		$this->check_auth();
-		$brand_list['brand_list'] = $this->master_model->brand_list();
-		$unit_list['unit_list'] = $this->master_model->unit_list();
-		$supplier_list['supplier_list'] = $this->master_model->supplier_list();
-		$category_list['category_list'] = $this->master_model->category_list();
-		$product_list['product_list'] = $this->master_model->product_list();
-		$data['data'] = array_merge($brand_list, $unit_list, $supplier_list, $category_list, $product_list);
-		$this->load->view('Pages/Master/product', $data);
+
+		$role  	= $_SESSION['user_role'];
+		$modul 	= 'Customer';
+		$check_role = $this->check_role($role, $modul);
+		if($check_role[0]->view_ac == 'Y'){
+			$brand_list['brand_list'] = $this->master_model->brand_list();
+			$unit_list['unit_list'] = $this->master_model->unit_list();
+			$supplier_list['supplier_list'] = $this->master_model->supplier_list();
+			$category_list['category_list'] = $this->master_model->category_list();
+			$product_list['product_list'] = $this->master_model->product_list();
+			$check_role['check_role'] = $check_role;
+			$data['data'] = array_merge($brand_list, $unit_list, $supplier_list, $category_list, $product_list, $check_role);
+			$this->load->view('Pages/Master/product', $data);
+		}else{
+			print_r("No Akses");die();
+		}
 	}
 
 	public function insert_header_product()

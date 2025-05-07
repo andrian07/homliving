@@ -25,8 +25,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $config['base_url']   = '';
-$config['header'] = "homeliving/application/views/Pages/header.php";
-$config['footer'] = "homeliving/application/views/Pages/footer.php";
+$config['header'] = "homliving/application/views/Pages/header.php";
+$config['footer'] = "homliving/application/views/Pages/footer.php";
 
 /*
 |--------------------------------------------------------------------------

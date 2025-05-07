@@ -42,7 +42,15 @@ require DOC_ROOT_PATH . $this->config->item('header');
               <a class="dropdown-item" data-toggle="modal" data-target="#exampleModalUpload">Upload Product</a>
             </div>
           </div>
-          <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button>
+
+
+          <?php if($data['check_role'][0]->add_ac == 'Y'){?>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah</button>
+          <?php }else{ ?>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" disabled><i class="fas fa-plus"></i> Tambah</button>
+          <?php } ?>
+
+
           <div class="modal fade bd-example-modal-xl" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
               <div class="modal-content">
@@ -320,10 +328,23 @@ require DOC_ROOT_PATH . $this->config->item('header');
               <td><?php if($row['ppn'] == 'N'){echo '<span class="badge badge-danger"><i class="fas fa-times-circle"></i></span>';}else{ echo '<span class="badge badge-success"><i class="fas fa-check-circle"></i></span>';} ?></td>
               <td><img src="<?php echo base_url();?>assets/products/<?php echo $row['product_picture']; ?>" width="80px" height="60px"/></td>
               <td>
-                <button class="btn btn-sm btn-warning" data-toggle="modal" data-id="<?php echo $row['product_id']; ?>" data-target="#exampleModaledit"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" data-title="Hapus" data-original-title="" title="" onclick="deletes('<?php echo $row['product_id']; ?>', '<?php echo $row['product_code']; ?>')"><i class="fas fa-trash"></i></button>
-                <button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" data-title="Pengaturan Produk" onclick="insert_detail_product('<?php echo $row['product_id']; ?>')"><i class="fas fa-cog"></i></button>
-              
+                <?php if($data['check_role'][0]->edit_ac == 'Y'){?>
+                  <button class="btn btn-sm btn-warning" data-toggle="modal" data-id="<?php echo $row['product_id']; ?>" data-target="#exampleModaledit"><i class="fas fa-edit"></i></button>
+                <?php }else{ ?>
+                  <button class="btn btn-sm btn-warning" data-toggle="modal" data-id="<?php echo $row['product_id']; ?>" data-target="#exampleModaledit" disabled><i class="fas fa-edit"></i></button>
+                <?php } ?>
+
+                <?php if($data['check_role'][0]->delete_ac == 'Y'){?>
+                  <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" data-title="Hapus" data-original-title="" title="" onclick="deletes('<?php echo $row['product_id']; ?>', '<?php echo $row['product_code']; ?>')"><i class="fas fa-trash"></i></button>
+                <?php }else{ ?>
+                  <button class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" data-title="Hapus" data-original-title="" title="" onclick="deletes('<?php echo $row['product_id']; ?>', '<?php echo $row['product_code']; ?>')" disabled><i class="fas fa-trash"></i></button>
+                <?php } ?>
+
+                <?php if($data['check_role'][0]->edit_ac == 'Y'){?>
+                  <button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" data-title="Pengaturan Produk" onclick="insert_detail_product('<?php echo $row['product_id']; ?>')"><i class="fas fa-cog"></i></button>
+                <?php }else{ ?>
+                  <button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" data-title="Pengaturan Produk" onclick="insert_detail_product('<?php echo $row['product_id']; ?>')" disabled><i class="fas fa-cog"></i></button>
+                <?php } ?>
               </td>
             </tr>
           <?php } ?>
